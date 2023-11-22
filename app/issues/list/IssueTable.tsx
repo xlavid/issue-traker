@@ -27,54 +27,54 @@ const IssueTable = ({ searchParams, issues }: Props) => {
 
   return (
     <Table.Root variant="surface">
-      <Table.Root variant="surface">
-        <Table.Header>
-          <Table.Row>
-            {columns.map((column) => (
-              <Table.ColumnHeaderCell
-                key={column.value}
-                className={column.className}
+      <Table.Header>
+        <Table.Row>
+          {columns.map((column) => (
+            <Table.ColumnHeaderCell
+              key={column.value}
+              className={column.className}
+            >
+              <NextLink
+                href={{
+                  query: {
+                    ...searchParams,
+                    orderBy: column.value,
+                    sort: changeSort(),
+                  },
+                }}
               >
-                <NextLink
-                  href={{
-                    query: {
-                      ...searchParams,
-                      orderBy: column.value,
-                      sort: changeSort(),
-                    },
-                  }}
-                >
-                  {column.label}
-                </NextLink>
-                {searchParams.sort === 'desc' && (
+                {column.label}
+              </NextLink>
+              {searchParams.orderBy === column.value &&
+                searchParams.sort === 'desc' && (
                   <ArrowDownIcon className="inline" />
                 )}
-                {searchParams.sort === 'asc' && (
+              {searchParams.orderBy === column.value &&
+                searchParams.sort === 'asc' && (
                   <ArrowUpIcon className="inline" />
                 )}
-              </Table.ColumnHeaderCell>
-            ))}
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {issues.map((issue) => (
-            <Table.Row key={issue.id}>
-              <Table.Cell>
-                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
-                <div className="block md:hidden">
-                  <IssueStatusBadge status={issue.status} />
-                </div>
-              </Table.Cell>
-              <Table.Cell className="hidden md:table-cell">
-                <IssueStatusBadge status={issue.status} />
-              </Table.Cell>
-              <Table.Cell className="hidden md:table-cell">
-                {issue.createdAt.toDateString()}
-              </Table.Cell>
-            </Table.Row>
+            </Table.ColumnHeaderCell>
           ))}
-        </Table.Body>
-      </Table.Root>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
+        {issues.map((issue) => (
+          <Table.Row key={issue.id}>
+            <Table.Cell>
+              <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+              <div className="block md:hidden">
+                <IssueStatusBadge status={issue.status} />
+              </div>
+            </Table.Cell>
+            <Table.Cell className="hidden md:table-cell">
+              <IssueStatusBadge status={issue.status} />
+            </Table.Cell>
+            <Table.Cell className="hidden md:table-cell">
+              {issue.createdAt.toDateString()}
+            </Table.Cell>
+          </Table.Row>
+        ))}
+      </Table.Body>
     </Table.Root>
   )
 }
