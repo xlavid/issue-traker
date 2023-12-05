@@ -62,7 +62,7 @@ const useUsers = () =>
   useQuery<User[]>({
     queryKey: ['users'],
     queryFn: () => fetch('/api/users').then((res) => res.json()),
-    staleTime: 60 * 1000,
+    // staleTime: 60 * 1000,
     retry: 3,
   })
 
